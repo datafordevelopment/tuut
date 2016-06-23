@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "preact": "^4.8.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.1",
+    "babel-eslint": "^6.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "compression-webpack-plugin": "^0.3.1",
+    "css-loader": "^0.23.1",
+    "eslint": "^2.11.1",
+    "eslint-loader": "^1.3.0",
+    "eslint-plugin-babel": "^3.2.0",
+    "eslint-plugin-react": "^5.1.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^2.1.0-beta.13",
+    "webpack-dev-server": "^2.1.0-beta.0"
+  },
+  "engines": {
+    "node": "6.x.x",
+    "npm": "3.x.x"
+  },
+  "name": "tuut",
+  "private": true,
+  "scripts": {
+    "build": "babel-node node_modules/webpack/bin/webpack --config webpack/production.js --bail",
+    "lint": "eslint .; exit 0",
+    "start": "babel-node ./webpack/server"
+  },
+  "version": "1.0.0"
+}

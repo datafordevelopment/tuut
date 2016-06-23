@@ -1,0 +1,4 @@
+{
+  "css.lint.unknownProperties": "ignore",
+  "javascript.validate.enable": false
+}
