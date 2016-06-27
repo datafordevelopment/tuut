@@ -1,33 +1,27 @@
 import { h, render, Component } from 'preact'
 
 export default function tuut() {
-  let reducers = {}
-  let state = {}
-  let viewCallback = null
+  const context = {}
 
   return {
-    model,
-    start,
-    view,
-  }
+    model({ reducers, state }) {
+      context.reducers = reducers
+      context.state = state
+    },
 
-  function model(model) {
-    state = model.state
-    reducers = model.reducers
-  }
+    start() {
+      render(
+        <Tuut
+          reducers={context.reducers}
+          state={context.state}
+          view={context.view} />,
+        document.body
+      )
+    },
 
-  function start() {
-    render(
-      <Tuut
-        reducers={reducers}
-        state={state}
-        viewCallback={viewCallback} />,
-      document.body
-    )
-  }
-
-  function view(callback) {
-    viewCallback = callback
+    view(view) {
+      context.view = view
+    },
   }
 }
 
@@ -38,10 +32,31 @@ class Tuut extends Component {
   }
 
   send(type, action) {
-    this.setState(this.props.reducers[type](action, this.state))
+    const reducer = this.props.reducers[type]
+
+    if (!reducer) {
+      throw Error('Could not find action ' + type)
+    }
+
+    this.setState(reducer(action, deepFreeze({ ...this.state })))
   }
 
-  render({ viewCallback }, state) {
-    return viewCallback(state, ::this.send)
+  render({ view }, state) {
+    return view(state, ::this.send)
   }
+}
+
+function deepFreeze(o) {
+  Object.freeze(o)
+
+  Object.getOwnPropertyNames(o).forEach(prop => {
+    if (o.hasOwnProperty(prop)
+    && o[prop] !== null
+    && (typeof o[prop] === 'object' || typeof o[prop] === 'function')
+    && !Object.isFrozen(o[prop])) {
+      deepFreeze(o[prop])
+    }
+  })
+
+  return o
 }
