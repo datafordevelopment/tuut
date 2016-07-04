@@ -14,6 +14,7 @@ export default {
     publicPath: '/',
   },
   plugins: [
+    ...shared.plugins,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
   ],

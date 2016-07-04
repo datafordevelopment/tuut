@@ -9,6 +9,7 @@ export default {
     sourceMapFilename: './build/app.js.map',
   },
   plugins: [
+    ...shared.plugins,
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),

@@ -1,3 +1,5 @@
+import webpack from 'webpack'
+
 export default {
   devtool: 'source-map',
   entry: [
@@ -14,4 +16,9 @@ export default {
       test: /\.css$/,
     }],
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      preact: 'preact',
+    }),
+  ],
 }

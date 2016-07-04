@@ -1,16 +1,27 @@
-import { h } from 'preact'
 import App from './components/app'
 import tuut from './tuut'
 
 const app = tuut()
 
 app.model({
+  effects: {
+    update: (state, action, send) => {
+      setTimeout(() => send('time', { time: new Date }), 1000)
+    },
+  },
+
   reducers: {
-    update: (action, state) => ({
+    time: (action, state) => ({
+      now: `${action.time}: ${state.title}`,
+    }),
+
+    update: action => ({
       title: action.value,
     }),
   },
+
   state: {
+    now: new Date,
     title: 'Set the title',
   },
 })
@@ -19,4 +30,4 @@ app.view((state, send) => (
   <App {...state} send={send} />
 ))
 
-app.start()
+document.body.appendChild(app.start())
